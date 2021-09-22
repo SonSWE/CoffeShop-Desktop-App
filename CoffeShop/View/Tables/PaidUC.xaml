@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="CoffeShop.View.Tables.PaidUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CoffeShop.View.Food"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" DataContext="{StaticResource PayTableVM}"
+             d:DesignHeight="688" d:DesignWidth="580">
+    <materialDesign:Card Grid.Row="0" Width="580" Height="688" BorderBrush="Black" Background="Transparent" Margin="0,0,0,10" Grid.RowSpan="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.2*"/>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Row="0" Height="564" UniformCornerRadius="10" Background="White" Margin="5 5 5 5" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                <ListView ItemsSource="{Binding CartList}" FontSize="16">
+                    <ListView.View>
+                        <GridView >
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="WindowMinimize" Margin="5" Foreground="DarkRed" HorizontalAlignment="Center" Width="Auto" Height="Auto">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding Path=DataContext.SubtractionCountCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" 
+                                                                               CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </materialDesign:PackIcon>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="SL" DisplayMemberBinding="{Binding Count}"/>
+                            <GridViewColumn Header="Tên món" DisplayMemberBinding="{Binding Food.Name}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:Card Background="Transparent">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding Path=DataContext.DeleteCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" 
+                                                                               CommandParameter="{Binding}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </materialDesign:Card>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Giá" DisplayMemberBinding="{Binding Food.OutputPrice}"/>
+                            <GridViewColumn Header="Thành tiền" DisplayMemberBinding="{Binding TotalPrice}"/>
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="PlusBox" Margin="5" Foreground="DarkRed" HorizontalAlignment="Center" Width="Auto" Height="Auto">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding Path=DataContext.PlusCountCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" 
+                                                                               CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </materialDesign:PackIcon>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </materialDesign:Card>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Background="White" BorderBrush="Black" Height="60" Margin="10 0 0 0">
+                    <TextBlock TextWrapping="Wrap" Text="{Binding TotalBill}" FontSize="24" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </Border>
+                <Grid Grid.Column="1">
+                    <Button Command="{Binding PayCMD}" Content="Thanh toán" Background="#FFFF80AB" Width="150" Height="80" FontFamily="Adobe Gothic Std B" FontSize="22" ></Button>
+                </Grid>
+            </Grid>
+        </Grid>
+    </materialDesign:Card>
+</UserControl>

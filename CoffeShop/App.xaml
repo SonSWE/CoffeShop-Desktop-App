@@ -1,0 +1,44 @@
+﻿<Application x:Class="CoffeShop.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:CoffeShop"
+             xmlns:view="clr-namespace:CoffeShop.View"
+             xmlns:viewModel="clr-namespace:CoffeShop.ViewModel" 
+             xmlns:view1="clr-namespace:CoffeShop.View.Food" 
+             xmlns:view2="clr-namespace:CoffeShop.View.Tables"
+             StartupUri="View/MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="/ResourceCoffeeShop/MainResource.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/Themes/MenuStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/Themes/RadioButtonStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/Themes/RadioButtonMainMenu.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
+                <view:HomeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:FoodTableViewModel}">
+                <view:FoodTables/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:FoodCategoryViewModel}">
+                <view:FoodCategoy/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:FoodViewModel}">
+                <view1:Food/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:PaidViewMdel}">
+                <view2:PaidUC/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:UnpaidViewModel}">
+                <view2:UnpaidUC/>
+            </DataTemplate>
+            
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

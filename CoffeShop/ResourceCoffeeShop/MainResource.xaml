@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ViewModel="clr-namespace:CoffeShop.ViewModel"
+                    xmlns:view="clr-namespace:CoffeShop.View">
+    <ViewModel:ControlBarViewModel x:Key="ControlBarVM"></ViewModel:ControlBarViewModel>
+    <ViewModel:FoodTableViewModel x:Key="FoodTableVM"></ViewModel:FoodTableViewModel>
+    <ViewModel:FoodCategoryViewModel x:Key="FoodCategoryVM"></ViewModel:FoodCategoryViewModel>
+    <ViewModel:FoodViewModel x:Key="FoodVM"></ViewModel:FoodViewModel>
+    <ViewModel:PayTablesViewModel x:Key="PayTableVM"></ViewModel:PayTablesViewModel>
+</ResourceDictionary>

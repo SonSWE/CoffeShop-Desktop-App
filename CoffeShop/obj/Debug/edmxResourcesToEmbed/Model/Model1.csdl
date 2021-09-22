@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CoffeeShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CoffeeShopEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="CoffeeShopModel.Account" />
+    <EntitySet Name="Bills" EntityType="CoffeeShopModel.Bill" />
+    <EntitySet Name="BillInfoes" EntityType="CoffeeShopModel.BillInfo" />
+    <EntitySet Name="Foods" EntityType="CoffeeShopModel.Food" />
+    <EntitySet Name="FoodCategories" EntityType="CoffeeShopModel.FoodCategory" />
+    <EntitySet Name="Images" EntityType="CoffeeShopModel.Image" />
+    <EntitySet Name="sysdiagrams" EntityType="CoffeeShopModel.sysdiagram" />
+    <EntitySet Name="TableFoods" EntityType="CoffeeShopModel.TableFood" />
+    <EntitySet Name="Totals" EntityType="CoffeeShopModel.Total" />
+    <AssociationSet Name="FK__Bill__DateCheckO__36B12243" Association="CoffeeShopModel.FK__Bill__DateCheckO__36B12243">
+      <End Role="TableFood" EntitySet="TableFoods" />
+      <End Role="Bill" EntitySet="Bills" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BillInfo__IdFood__398D8EEE" Association="CoffeeShopModel.FK__BillInfo__IdFood__398D8EEE">
+      <End Role="Bill" EntitySet="Bills" />
+      <End Role="BillInfo" EntitySet="BillInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Total__Revenue__3D5E1FD2" Association="CoffeeShopModel.FK__Total__Revenue__3D5E1FD2">
+      <End Role="Bill" EntitySet="Bills" />
+      <End Role="Total" EntitySet="Totals" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BillInfo__IdFood__3A81B327" Association="CoffeeShopModel.FK__BillInfo__IdFood__3A81B327">
+      <End Role="Food" EntitySet="Foods" />
+      <End Role="BillInfo" EntitySet="BillInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Food__IdImage__32E0915F" Association="CoffeeShopModel.FK__Food__IdImage__32E0915F">
+      <End Role="FoodCategory" EntitySet="FoodCategories" />
+      <End Role="Food" EntitySet="Foods" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Food__IdImage__33D4B598" Association="CoffeeShopModel.FK__Food__IdImage__33D4B598">
+      <End Role="Image" EntitySet="Images" />
+      <End Role="Food" EntitySet="Foods" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="Online" Type="Boolean" />
+    <Property Name="Permission" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Bill">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IdTable" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DateCheckOut" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="TableFood" Relationship="CoffeeShopModel.FK__Bill__DateCheckO__36B12243" FromRole="Bill" ToRole="TableFood" />
+    <NavigationProperty Name="BillInfoes" Relationship="CoffeeShopModel.FK__BillInfo__IdFood__398D8EEE" FromRole="Bill" ToRole="BillInfo" />
+    <NavigationProperty Name="Totals" Relationship="CoffeeShopModel.FK__Total__Revenue__3D5E1FD2" FromRole="Bill" ToRole="Total" />
+  </EntityType>
+  <EntityType Name="BillInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IdBill" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IdFood" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Count" Type="Int32" />
+    <NavigationProperty Name="Bill" Relationship="CoffeeShopModel.FK__BillInfo__IdFood__398D8EEE" FromRole="BillInfo" ToRole="Bill" />
+    <NavigationProperty Name="Food" Relationship="CoffeeShopModel.FK__BillInfo__IdFood__3A81B327" FromRole="BillInfo" ToRole="Food" />
+    <Property Name="TotalPrice" Type="Double" />
+  </EntityType>
+  <EntityType Name="Food">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IdCategory" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="Stock" Type="Int32" Nullable="false" />
+    <Property Name="InputPrice" Type="Double" Nullable="false" />
+    <Property Name="OutputPrice" Type="Double" Nullable="false" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IdImage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IsOutOfStock" Type="Boolean" />
+    <NavigationProperty Name="BillInfoes" Relationship="CoffeeShopModel.FK__BillInfo__IdFood__3A81B327" FromRole="Food" ToRole="BillInfo" />
+    <NavigationProperty Name="FoodCategory" Relationship="CoffeeShopModel.FK__Food__IdImage__32E0915F" FromRole="Food" ToRole="FoodCategory" />
+    <NavigationProperty Name="Image" Relationship="CoffeeShopModel.FK__Food__IdImage__33D4B598" FromRole="Food" ToRole="Image" />
+  </EntityType>
+  <EntityType Name="FoodCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NameUserAdd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdd" Type="DateTime" Precision="3" />
+    <Property Name="NameUserChange" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DateChange" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Foods" Relationship="CoffeeShopModel.FK__Food__IdImage__32E0915F" FromRole="FoodCategory" ToRole="Food" />
+  </EntityType>
+  <EntityType Name="Image">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Foods" Relationship="CoffeeShopModel.FK__Food__IdImage__33D4B598" FromRole="Image" ToRole="Food" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TableFood">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsFull" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Bills" Relationship="CoffeeShopModel.FK__Bill__DateCheckO__36B12243" FromRole="TableFood" ToRole="Bill" />
+  </EntityType>
+  <EntityType Name="Total">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdBill" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="Revenue" Type="Double" />
+    <NavigationProperty Name="Bill" Relationship="CoffeeShopModel.FK__Total__Revenue__3D5E1FD2" FromRole="Total" ToRole="Bill" />
+  </EntityType>
+  <Association Name="FK__Bill__DateCheckO__36B12243">
+    <End Type="CoffeeShopModel.TableFood" Role="TableFood" Multiplicity="1" />
+    <End Type="CoffeeShopModel.Bill" Role="Bill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TableFood">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bill">
+        <PropertyRef Name="IdTable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BillInfo__IdFood__398D8EEE">
+    <End Type="CoffeeShopModel.Bill" Role="Bill" Multiplicity="1" />
+    <End Type="CoffeeShopModel.BillInfo" Role="BillInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bill">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillInfo">
+        <PropertyRef Name="IdBill" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Total__Revenue__3D5E1FD2">
+    <End Type="CoffeeShopModel.Bill" Role="Bill" Multiplicity="1" />
+    <End Type="CoffeeShopModel.Total" Role="Total" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bill">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Total">
+        <PropertyRef Name="IdBill" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BillInfo__IdFood__3A81B327">
+    <End Type="CoffeeShopModel.Food" Role="Food" Multiplicity="1" />
+    <End Type="CoffeeShopModel.BillInfo" Role="BillInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Food">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillInfo">
+        <PropertyRef Name="IdFood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Food__IdImage__32E0915F">
+    <End Type="CoffeeShopModel.FoodCategory" Role="FoodCategory" Multiplicity="1" />
+    <End Type="CoffeeShopModel.Food" Role="Food" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoodCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Food">
+        <PropertyRef Name="IdCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Food__IdImage__33D4B598">
+    <End Type="CoffeeShopModel.Image" Role="Image" Multiplicity="0..1" />
+    <End Type="CoffeeShopModel.Food" Role="Food" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Image">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Food">
+        <PropertyRef Name="IdImage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
