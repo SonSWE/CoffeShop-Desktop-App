@@ -18,6 +18,7 @@ namespace CoffeShop.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+    //relaycommand
     class RelayCommand<T> : ICommand
     {
         private readonly Predicate<T> _canExecute;
